@@ -18,3 +18,5 @@
     group: "{{ item.group | default(aux_file_default_group) }}"
     mode: "{{ item.mode | default(aux_file_default_mode) }}"
   with_items: "{{ aux_file_definitions }}"
+  loop_control:
+    label: "{{ item.dest }}"
