@@ -21,6 +21,13 @@
   loop_control:
     label: "{{ item.dest }}"
 
+- name: Ensure AUX packages are installed
+  ansible.builtin.package:
+    name: "{{ aux_package_definitions }}"
+    state: "{{ aux_package_state }}"
+  become: true
+  when: aux_package_definitions|length > 0
+
 - name: Ensure AUX commands are run
   ansible.builtin.command: "{{ item.command }}"
   become: "{{ item.become|default(aux_command_default_become)|bool }}"

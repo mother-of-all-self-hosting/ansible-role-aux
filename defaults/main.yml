@@ -93,6 +93,28 @@ aux_file_default_group: root
 #     group: 'some-group'
 aux_file_definitions: []
 
+# The state when installing packages using `aux_package_definitions`
+aux_package_state: present
+
+# Holds a list of packages to install on the server, using the
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_module.html
+# All definitions will be sent to the single package.name
+#
+# Example:
+# aux_package_definitions:
+#   - httpd
+#   - nginx=1.23.0
+# aux_package_state: latest
+#
+# Will call:
+# ansible.builtin.package:
+#   name:
+#     - httpd
+#     - nginx=1.23.0
+#   state: latest
+# become: true
+aux_package_definitions: []
+
 # The default become when running commands using `aux_command_definitions`
 aux_command_default_become: false
 
