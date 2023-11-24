@@ -20,3 +20,12 @@
   with_items: "{{ aux_file_definitions }}"
   loop_control:
     label: "{{ item.dest }}"
+
+- name: Ensure AUX commands are run
+  ansible.builtin.command: "{{ item.command }}"
+  become: "{{ item.become|default(aux_command_default_become)|bool }}"
+  become_user: "{{ item.become_user|default(aux_command_default_become_user) }}"
+  ignore_errors: "{{ item.ignore_errors|default(aux_command_default_ignore_errors)|bool }}"
+  with_items: "{{ aux_command_definitions }}"
+  loop_control:
+    label: "{{ item.command }}"

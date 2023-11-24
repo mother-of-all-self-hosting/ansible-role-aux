@@ -92,3 +92,32 @@ aux_file_default_group: root
 #     owner: 'some-user'
 #     group: 'some-group'
 aux_file_definitions: []
+
+# The default become when running commands using `aux_command_definitions`
+aux_command_default_become: false
+
+# The default become_user when running commands using `aux_command_definitions`
+aux_command_default_become_user: root
+
+# The default ignore_errors when running commands using `aux_command_definitions`
+aux_command_default_ignore_errors: false
+
+# Holds a list of commands to call on the server, using the
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
+#
+# By default, commands are are:
+# - run with become specified in `aux_command_default_become`
+# - using user specified in `aux_command_default_become_user`
+#
+# You can define the command with all its args inline (in your `vars.yml` file) or as an external file (see the example below).
+#
+# Example:
+#
+# aux_command_definitions:
+#   - command: "/usr/bin/make_database.sh db_user db_name creates=/path/to/database" # Run command if /path/to/database does not exist
+#     become: true
+#     become_user: system-user
+#
+#   - command: "/usr/bin/just-run" # Run command no matter what, ignore errors
+#     ignore_errors: true
+aux_command_definitions: []
