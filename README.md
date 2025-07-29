@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2023 Slavi Pantaleev
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 # AUX Ansible role
 
 This is an [Ansible](https://www.ansible.com/) role which helps you manage auxiliary files and directories.
