@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-
 - name: Ensure aux files and directories configured
   tags:
     - setup-all
@@ -11,4 +10,5 @@
     - install-all
     - install-aux
   block:
-    - ansible.builtin.include_tasks: "{{ role_path }}/tasks/setup.yml"
+    - name: Run setup task
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/setup.yml"
