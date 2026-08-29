@@ -131,9 +131,10 @@ provisioner:
         # (assigning to `aux_directory_definitions` in vars.yml). Both shapes
         # are therefore exercised by this one scenario.
         #
-        # `aux_command_default_become`, `aux_command_default_become_user` and
-        # `aux_command_default_ignore_errors` are left at the role's defaults of
-        # false, root and false.
+        # `aux_command_default_become`, `aux_command_default_become_user`,
+        # `aux_command_default_ignore_errors` and
+        # `aux_command_default_show_output` are left at the role's defaults of
+        # false, root, false and false.
         # ------------------------------------------------------------------
         aux_command_definitions:
           # No `become`, so this runs as the connection user and the marker
@@ -157,8 +158,13 @@ provisioner:
               /var/lib/molecule-aux/never-existed
             ignore_errors: true
 
-          # After the failing one, to show the loop carried on.
-          - command: "/usr/bin/touch /var/lib/molecule-aux/command-last.marker"
+          # After the failing one, to show the loop carried on. This also opts
+          # into output display, exercising stdout and stderr handling in the
+          # converge transcript while still producing a marker verify can read.
+          - command: >-
+              /bin/sh -c 'printf aux-visible-stdout; printf aux-visible-stderr >&2;
+              touch /var/lib/molecule-aux/command-last.marker'
+            show_output: true
   env:
     # Workaround for https://github.com/ansible/molecule/issues/4391
     ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/..:/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:~/.ansible/roles
