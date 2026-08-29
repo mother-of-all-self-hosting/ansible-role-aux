@@ -134,19 +134,24 @@ provisioner:
         # `aux_command_default_become`, `aux_command_default_become_user`,
         # `aux_command_default_ignore_errors` and
         # `aux_command_default_show_output` are left at the role's defaults of
-        # false, root, false and false.
+        # false, root, false and true.
         # ------------------------------------------------------------------
         aux_command_definitions:
           # No `become`, so this runs as the connection user and the marker
           # comes out root-owned.
-          - command: "/usr/bin/touch /var/lib/molecule-aux/command-as-root.marker"
+          - command: >-
+              /bin/sh -c 'printf aux-default-visible-stdout;
+              touch /var/lib/molecule-aux/command-as-root.marker'
 
           # With `become`, so the marker comes out owned by the unprivileged
           # user. This is the assertion that distinguishes a role which honors
           # the per-item become settings from one which runs everything as root.
-          - command: "/usr/bin/touch /var/lib/molecule-aux/command-as-user.marker"
+          - command: >-
+              /bin/sh -c 'printf aux-explicitly-hidden-stdout;
+              touch /var/lib/molecule-aux/command-as-user.marker'
             become: true
             become_user: aux-molecule-user
+            show_output: false
 
           # Removes a file that exists and one that does not, so it does its
           # work and still exits non-zero. The converge only survives it because
@@ -158,13 +163,12 @@ provisioner:
               /var/lib/molecule-aux/never-existed
             ignore_errors: true
 
-          # After the failing one, to show the loop carried on. This also opts
-          # into output display, exercising stdout and stderr handling in the
-          # converge transcript while still producing a marker verify can read.
+          # After the failing one, to show the loop carried on. Its stdout and
+          # stderr exercise the default output display while the marker gives
+          # verify something persistent to inspect.
           - command: >-
               /bin/sh -c 'printf aux-visible-stdout; printf aux-visible-stderr >&2;
               touch /var/lib/molecule-aux/command-last.marker'
-            show_output: true
   env:
     # Workaround for https://github.com/ansible/molecule/issues/4391
     ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/..:/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:~/.ansible/roles
