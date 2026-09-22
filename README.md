@@ -15,7 +15,7 @@ Check [`defaults/main.yml`](defaults/main.yml) for the full list of supported op
 
 ## Testing
 
-The role ships a [Molecule](https://ansible.readthedocs.io/projects/molecule/) suite which runs it against a container, hands it a representative set of directory, file, package and command definitions and then reads the host back. See [`molecule/README.md`](molecule/README.md) for what it asserts and for what it deliberately does not.
+The role ships a [Molecule](https://ansible.readthedocs.io/projects/molecule/) suite which runs it against a container, hands it a representative set of directory, file, package and command definitions and then reads the host back. Refer to [`molecule/README.md`](molecule/README.md) for what it asserts and for what it deliberately does not.
 
 ## Releases
 
