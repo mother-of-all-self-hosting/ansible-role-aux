@@ -19,9 +19,11 @@ The role ships a [Molecule](https://ansible.readthedocs.io/projects/molecule/) s
 
 ## Releases
 
-Release tags are computed from the state of the repository rather than from commit messages: [`bin/compute-next-tag.sh`](bin/compute-next-tag.sh) continues the newest existing release series and moves only the `-N` counter, and only when a commit touched something a consumer of this role can see (`defaults/`, `meta/`, `tasks/`, and `files/`/`templates/` should they ever appear). Documentation, CI and test changes are deliberately not released, so that the playbooks pinning this role are not churned for nothing.
+Tags are computed from the state of the repository rather than from commit messages: [`bin/compute-next-tag.sh`](./bin/compute-next-tag.sh) continues the release series of the newest existing tag whenever a commit touches `defaults/`, `files/`, `meta/`, `tasks/` or `templates/`, and the [autotag workflow](./.github/workflows/autotag.yml) pushes the result. Commits which only touch documentation, CI configuration or the test suite are not released.
 
-This role has no version of its own — it deploys no software — so the version part of the tag is inherited from whatever came before. A breaking change to its variables is released by tagging one commit by hand as the start of a new series (`v2.0.0-0`, say); everything after it continues from there. [`bin/test-compute-next-tag.sh`](bin/test-compute-next-tag.sh) exercises all of this against throwaway repositories, and runs as a pre-commit hook.
+This role deploys no software and so has no version of its own; the version component of the tags is a number chosen by hand. To open a new series — for a breaking change to the role's variables, say — tag one commit as `v2.0.0-0` by hand, and everything after it continues from there.
+
+[`bin/test-compute-next-tag.sh`](bin/test-compute-next-tag.sh) exercises all of this against throwaway repositories, and runs as a pre-commit hook.
 
 ## Upgrading from v1 to v2
 
