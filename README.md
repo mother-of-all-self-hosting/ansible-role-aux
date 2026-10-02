@@ -37,7 +37,7 @@ Refer to [this page](./molecule/README.md) for details about how to utilize it.
 
 ### Releases
 
-Tags are computed from the state of the repository rather than from commit messages: [`bin/compute-next-tag.sh`](./bin/compute-next-tag.sh) continues the release series of the newest existing tag whenever a commit touches `defaults/`, `files/`, `meta/`, `tasks/` or `templates/`, and the [autotag workflow](./.github/workflows/autotag.yml) pushes the result. Commits which only touch documentation, CI configuration or the test suite are not released.
+Tags are computed from the state of the repository rather than from commit messages: [`bin/compute-next-tag.sh`](bin/compute-next-tag.sh) continues the release series of the newest existing tag whenever a commit touches `defaults/`, `files/`, `meta/`, `tasks/` or `templates/`, and the [autotag workflow](.github/workflows/autotag.yml) pushes the result. Commits which only touch documentation, CI configuration or the test suite are not released.
 
 This role deploys no software and so has no version of its own; the version component of the tags is a number chosen by hand. To open a new series — for a breaking change to the role's variables, say — tag one commit as `v2.0.0-0` by hand, and everything after it continues from there.
 
